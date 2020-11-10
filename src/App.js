@@ -1,14 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useContext, createContext, useState } from 'react'
+import Router from './components/application/router.js'
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-
-      </header>
+      <Router />
     </div>
   );
 }
-
-export default App;
