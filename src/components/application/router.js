@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter,
   Switch,
@@ -11,11 +11,16 @@ import {
 import { ProvideAuth, useAuth } from '../../hooks/auth.js'
 
 export default function Router() {
+  const auth = useAuth()
+
   return (
     <ProvideAuth>
       <BrowserRouter>
         <div>
           <Switch>
+            <Route path='/'>
+              <RootPath />
+            </Route>
             <Route path='/login'>
 
             </Route>
@@ -39,7 +44,7 @@ export default function Router() {
 }
 
 function PrivateRoute({ children, ...rest }) {
-  let auth = useAuth()
+  const auth = useAuth()
   return (
     <Route {...rest} render={({ location }) =>
         auth.user ? (children) :
@@ -47,4 +52,13 @@ function PrivateRoute({ children, ...rest }) {
       }
     />
   )
+}
+
+function RootPath() {
+  const auth = useAuth()
+  return (
+    auth.user ?
+    (<Redirect to={{ pathname: '/schedule' }} />) :
+    (<Redirect to={{ pathname: '/login' }} />)
+      )
 }
