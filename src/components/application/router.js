@@ -1,29 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter,
   Switch,
   Route,
-  Link,
   Redirect,
   useHistory,
   useLocation
 } from 'react-router-dom'
 import { ProvideAuth, useAuth } from '../../hooks/auth.js'
+import Navigation from './nav.js'
 
 export default function Router() {
-  const auth = useAuth()
-
   return (
     <ProvideAuth>
       <BrowserRouter>
+        <Navigation />
         <div>
           <Switch>
-            <Route path='/'>
-              <RootPath />
+            <Route exact path='/'>
+              <Redirect to={{ pathname: '/schedule' }} />
             </Route>
-            <Route path='/login'>
+            <LoginRoute path='/login'>
 
-            </Route>
+            </LoginRoute>
             <PrivateRoute path='/schedule'>
 
             </PrivateRoute>
@@ -54,11 +53,13 @@ function PrivateRoute({ children, ...rest }) {
   )
 }
 
-function RootPath() {
+function LoginRoute({ children, ...rest }) {
   const auth = useAuth()
   return (
-    auth.user ?
-    (<Redirect to={{ pathname: '/schedule' }} />) :
-    (<Redirect to={{ pathname: '/login' }} />)
-      )
+    <Route {...rest} render={({ location }) =>
+        !auth.user ? (children) :
+        (<Redirect to={{ pathname: '/schedule', state: { from: location } }} />)
+      }
+    />
+  )
 }

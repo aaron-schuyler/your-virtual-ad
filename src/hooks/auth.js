@@ -29,12 +29,7 @@ function useProvideAuth() {
   }
 
   useEffect(() => {
-    // fetch(baseUrl + 'checkSession')
-    // .then(res => res.json())
-    // .then(json => {
-    //   setUser(json.user)
-    // })
-      setUser(true)
+    setUser(true)
   }, [])
 
   return {
