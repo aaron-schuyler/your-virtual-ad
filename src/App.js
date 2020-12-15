@@ -1,4 +1,4 @@
-import './App.css';
+import './App.css'
 import React from 'react'
 import Router from './components/application/router.js'
 
@@ -7,5 +7,5 @@ export default function App() {
     <div className="App">
       <Router />
     </div>
-  );
+  )
 }

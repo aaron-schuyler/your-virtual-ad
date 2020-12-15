@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-  useLocation
-} from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { ProvideAuth, useAuth } from '../../hooks/auth.js'
 import Navigation from './nav.js'
+import Schedule from '../schedule/schedule.js'
 
 export default function Router() {
   return (
@@ -24,7 +18,7 @@ export default function Router() {
 
             </LoginRoute>
             <PrivateRoute path='/schedule'>
-
+              <Schedule />
             </PrivateRoute>
             <PrivateRoute path='/payroll'>
 
