@@ -60,10 +60,11 @@ export default function Schedule() {
     return (
       <Form onSubmit={handleNewGameFormSubmit}>
         <Form.Control as='select'>
-          <option selected>Select an Organization</option>
+          <option selected disabled>Select an Organization</option>
           {RenderOrganizationsOptions()}
         </Form.Control>
         <Form.Control as='select'>
+          <option selected disabled>Select an age group</option>
           {RenderLevelsOptions()}
         </Form.Control>
         <Button type='submit'>Create Game</Button>
