@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { Games, Teams } from '../../gql/index.js'
+import { Games, Organizations, Levels } from '../../gql/index.js'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -38,12 +38,21 @@ export default function Schedule() {
     })
   }
 
-  function RenderTeamsOptions() {
-    const {loading, error, data} = useQuery(Teams.GET)
+  function RenderOrganizationsOptions() {
+    const {loading, error, data} = useQuery(Organizations.GET)
     if (loading) return <option>Loading Data...</option>
     if (error) return <option>Error loading data.</option>
-    return data.teams.map(team => {
-      <option value={team.id}>{team.organization.name}</option>
+    return data.organizations.map(organization => {
+      return (<option value={organization.id}>{organization.name}</option>)
+    })
+  }
+
+  function RenderLevelsOptions() {
+    const {loading, error, data} = useQuery(Levels.GET)
+    if (loading) return <option>Loading Data...</option>
+    if (error) return <option>Error loading data.</option>
+    return data.levels.map(level => {
+      return (<option value={level.id}>{level.gender} {level.ageGroup.name}</option>)
     })
   }
 
@@ -51,7 +60,11 @@ export default function Schedule() {
     return (
       <Form onSubmit={handleNewGameFormSubmit}>
         <Form.Control as='select'>
-          {RenderTeamsOptions()}
+          <option selected>Select an Organization</option>
+          {RenderOrganizationsOptions()}
+        </Form.Control>
+        <Form.Control as='select'>
+          {RenderLevelsOptions()}
         </Form.Control>
         <Button type='submit'>Create Game</Button>
       </Form>
