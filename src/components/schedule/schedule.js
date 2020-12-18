@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button'
 export default function Schedule() {
   const [newGameFormActive, setNewGameFormActive] = useState(false)
   const [newGame, setNewGame] = useState({})
+  const [selectedOrganizationId, setSelectedOrganizationId] = useState()
 
   const handleNewGameFormSubmit = (e) => {
     e.preventDefault()
@@ -47,8 +48,16 @@ export default function Schedule() {
     })
   }
 
-  function RenderLevelsOptions() {
-    const {loading, error, data} = useQuery(Levels.GET)
+  function RenderLevelsOptions(organizationId) {
+    let query, options
+    if (organizationId) {
+      options = {variables: {organizationId: organizationId}}
+      query = Levels.GET_FROM_ORGANIZATION
+    } else {
+      options = {}
+      query = Levels.GET
+    }
+    const {loading, error, data} = useQuery(query, options)
     if (loading) return <option>Loading Data...</option>
     if (error) return <option>Error loading data.</option>
     return data.levels.map(level => {
@@ -59,13 +68,13 @@ export default function Schedule() {
   function RenderNewGameForm() {
     return (
       <Form onSubmit={handleNewGameFormSubmit}>
-        <Form.Control as='select'>
+        <Form.Control as='select' onChange={e => setSelectedOrganizationId(e.target.value)}>
           <option selected disabled>Select an Organization</option>
           {RenderOrganizationsOptions()}
         </Form.Control>
         <Form.Control as='select'>
           <option selected disabled>Select an age group</option>
-          {RenderLevelsOptions()}
+          {RenderLevelsOptions(selectedOrganizationId)}
         </Form.Control>
         <Button type='submit'>Create Game</Button>
       </Form>

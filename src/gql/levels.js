@@ -12,6 +12,19 @@ const GET = gql`
   }
 `
 
+const GET_FROM_ORGANIZATION = gql`
+  query getLevels($organizationId: ID) {
+    levels(organization_id: $organizationId) {
+      id,
+      gender,
+      ageGroup {
+        name
+      }
+    }
+  }
+`
+
 export default {
-  GET
+  GET,
+  GET_FROM_ORGANIZATION
 }
