@@ -1,13 +1,10 @@
 import { gql } from '@apollo/client'
 
 const GET = gql`
-  query getLevels {
-    levels {
+  query getSports {
+    sports {
       id,
-      gender,
-      ageGroup {
-        name
-      }
+      name
     }
   }
 `
