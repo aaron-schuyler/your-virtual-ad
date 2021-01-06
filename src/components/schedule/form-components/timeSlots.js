@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 const blockedTimes = [['10:00', '11:00'], ['14:30', '15:15']]
-
 export default function TimeSlots(props) {
+  const [rangeSelected, setRangeSelected] = useState(true)
   function timeSlotClick(e, hour) {
     let bounds = e.target.getBoundingClientRect()
 
@@ -16,10 +16,13 @@ export default function TimeSlots(props) {
       min = ':30'
     else
       min = ':45'
-    if (!props.value || !props.value[0] || props.value[0].split(':')[0] > hour || (props.value[0] && props.value[1]))
-      props.onChange([hour + min, ''])
-    else
-      props.onChange([props.value[0], hour + min])
+    if (rangeSelected) {
+      props.onChange([hour + min, (hour + 1) + min])
+      setRangeSelected(false)
+    } else {
+        props.onChange([props.value[0], hour + min])
+        setRangeSelected(true)
+      }
   }
 
   function renderSlots() {
