@@ -1,0 +1,13 @@
+.time-slots {
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  font-size: 8px;
+  font-weight: bold;
+}
+.time-box {
+  height:30px;
+}
+
+.react-date-picker__wrapper, .react-timerange-picker__wrapper {
+  border:none !important;
+}

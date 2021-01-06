@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-// import { useLazyQuery } from '@apollo/client'
-import { Teams } from '../../gql/index.js'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import DatePicker from 'react-date-picker'
+import TimeRangePicker from '@wojtekmaj/react-timerange-picker'
 import TeamSelects from './form-components/teamSelects.js'
 import SportAndLevelSelects from './form-components/sportAndLevelSelects.js'
+import TimeSlots from './form-components/timeSlots.js'
 
 export default function NewGameForm() {
   const [newGame, setNewGame] = useState({})
@@ -15,6 +16,8 @@ export default function NewGameForm() {
   const [levelId, setLevelId] = useState()
   const [homeTeamId, setHomeTeamId] = useState()
   const [awayTeamId, setAwayTeamId] = useState()
+  const [date, setDate] = useState(new Date())
+  const [timeRange, setTimeRange] = useState(['',''])
 
   const handleNewGameFormSubmit = (e) => {
     e.preventDefault()
@@ -60,9 +63,18 @@ export default function NewGameForm() {
         <Row>
           <Col>
             <Form.Group>
-              <Form.Control type='dateTime' />
+              <DatePicker value={date} className='mt-1' />
+              <TimeRangePicker className='mt-1 ml-3' value={timeRange} disableClock={true} onChange={setTimeRange} />
+              <TimeSlots value={timeRange} onChange={setTimeRange} />
             </Form.Group>
           </Col>
+          <Col>
+            <Form.Group>
+
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
           <Col>
             <Form.Group className='text-right'>
               <Button type='submit'>Create Game</Button>
