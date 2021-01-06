@@ -16,7 +16,7 @@ export default function TimeSlots(props) {
       min = ':30'
     else
       min = ':45'
-    if (rangeSelected) {
+    if (rangeSelected || props.value[0].split(':')[0] > hour) {
       props.onChange([hour + min, (hour + 1) + min])
       setRangeSelected(false)
     } else {
