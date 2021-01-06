@@ -7,19 +7,19 @@ export default function TimeSlots(props) {
     let bounds = e.target.getBoundingClientRect()
 
     let percent = (e.clientX - bounds.left) / e.target.offsetWidth * 100
-    let time
+    let min
     if (percent < 25)
-      time = `${hour}:00`
+      min = ':00'
     else if (percent < 50)
-      time = `${hour}:15`
+      min = ':15'
     else if (percent < 75)
-      time = `${hour}:30`
+      min = ':30'
     else
-      time = `${hour}:45`
-    if (!props.value || !props.value[0] || props.value[0].split(':')[0] > hour)
-      props.onChange([time, ''])
+      min = ':45'
+    if (!props.value || !props.value[0] || props.value[0].split(':')[0] > hour || (props.value[0] && props.value[1]))
+      props.onChange([hour + min, ''])
     else
-      props.onChange([props.value[0], time])
+      props.onChange([props.value[0], hour + min])
   }
 
   function renderSlots() {
